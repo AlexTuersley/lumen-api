@@ -10,8 +10,11 @@ use GuzzleHttp\Exception\BadResponseException;
 class AuthController extends Controller
 {
     public function login(Request $request){
-        $email = $request->email;
-        $password = $request->password;
+        $this->validate($request, [
+            'username' => 'required|email|unique:users',
+            'password' => 'required',
+        ]);
+
         $client = new Client();
 
         try {
@@ -20,8 +23,8 @@ class AuthController extends Controller
                     "client_secret" => config('service.passport.client_secret'),
                     "grant_type" => "password",
                     "client_id" => config('service.passport.client_id'),
-                    "username" => $email,
-                    "password" => $password
+                    "username" => $request->username,
+                    "password" => $request->password
                 ]
             ]);
         }

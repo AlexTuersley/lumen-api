@@ -14,6 +14,11 @@ class PostController extends Controller
 
     public function store(Request $request){
         try{
+            $this->validate($request, [
+                'title' => 'required|string',
+                'body' => 'required|string'
+            ]);
+
             $post = new Post([
                 'title' => $request->title,
                 'body' => $request->body
@@ -34,6 +39,12 @@ class PostController extends Controller
 
     public function update(Request $request){
         try{
+
+            $this->validate($request, [
+                'title' => 'string',
+                'body' => 'string'
+            ]);
+
             $post = Post::findOrFail($request->post);
             $post->title =  $request->title;
             $post->body = $request->body;
