@@ -2,8 +2,6 @@
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
-use App\Http\Controllers\PostController;
-
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -20,6 +18,7 @@ $router->get('/', function () use ($router) {
 });
 
 $router->group(['prefix' => 'api'], function() use ($router){
+    $router->post('/login', 'AuthController@login');
 
     $router->group(['prefix' => 'posts'], function() use ($router){
         $router->get('/', 'PostController@index');
